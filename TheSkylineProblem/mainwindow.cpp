@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     //invert Y-axis + scaling
     ui->graphicsView_2->scale(1,-1);
 
-    connect(ui->pb_load, &QPushButton::clicked, this, &MainWindow::on_loadData);
+    connect(ui->pb_loadData, &QPushButton::clicked, this, &MainWindow::on_loadData);
     connect(ui->pb_calculateSkyline, &QPushButton::clicked, this, &MainWindow::on_calculateSkyline);
     connect(ui->pb_showBuildings, &QPushButton::clicked, this, &MainWindow::on_showBuildings);
     connect(ui->pb_showSkyline, &QPushButton::clicked, this, &MainWindow::on_showSkyline);
@@ -35,6 +35,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_loadData()
 {
+    //erase previous data
+    ui->te_buildings->clear();
+    ui->te_skyline->clear();
+    scene->clear();
+    scene2->clear();
+    scene2->setBackgroundBrush(QBrush());
+
+    //FileDialog
     QString fileName = QFileDialog::getOpenFileName(this, "Load buildings data", "../TheSkylineProblem/examples", "Text files (*.txt)");
 
     if (fileName.isEmpty())
@@ -73,23 +81,33 @@ void MainWindow::on_loadData()
 
     calculateBuildings();
 
-}
-
-void MainWindow::on_calculateSkyline()
-{
-    // #TODO
-    skyline_buildings = skyline.getSkyline(buildings);
-    calculateSkyline();
+    ui->pb_showBuildings->setEnabled(true);
+    ui->pb_calculateSkyline->setEnabled(true);
 }
 
 void MainWindow::on_showBuildings()
 {
+    ui->pb_showBuildings->setDisabled(true);
+    if(!ui->te_skyline->toPlainText().isEmpty())
+        ui->pb_showSkyline->setEnabled(true);
+
     showBuildings();
     showSkyline();
 }
 
+void MainWindow::on_calculateSkyline()
+{
+    ui->pb_calculateSkyline->setDisabled(true);
+    if (!ui->pb_showBuildings->isEnabled())
+        ui->pb_showSkyline->setEnabled(true);
+
+    skyline_buildings = skyline.getSkyline(buildings);
+    calculateSkyline();
+}
+
 void MainWindow::on_showSkyline()
 {
+    ui->pb_showSkyline->setDisabled(true);
     drawSkyline();
 }
 

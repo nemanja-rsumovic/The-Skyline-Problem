@@ -33,8 +33,8 @@ public:
 
 private slots:
     void on_loadData();
-    void on_calculateSkyline();
     void on_showBuildings();
+    void on_calculateSkyline();
     void on_showSkyline();
 
 private:

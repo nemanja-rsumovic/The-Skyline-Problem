@@ -90,7 +90,7 @@ void MainWindow::on_showBuildings()
 
 void MainWindow::on_showSkyline()
 {
-    // #TODO
+    drawSkyline();
 }
 
 void MainWindow::calculateBuildings()
@@ -207,6 +207,35 @@ void MainWindow::showSkyline()
     ui->graphicsView_2->fitInView(scene2->sceneRect(), Qt::KeepAspectRatio);
 }
 
+void MainWindow::drawSkyline()
+{
+    if (skyline_buildings.empty())
+         return;
+
+     QPainterPath path;
+
+     path.moveTo(skyline_buildings[0][0], 0);
+     path.lineTo(skyline_buildings[0][0], skyline_buildings[0][1]);
+
+     int skyline_size = skyline_buildings.size();
+     for (int i = 1; i < skyline_size; i++)
+     {
+         qreal x = skyline_buildings[i][0];
+         qreal y = skyline_buildings[i][1];
+
+         path.lineTo(x, path.currentPosition().y());
+         path.lineTo(x, y);
+     }
+
+     QPen pen(QColor(255, 80, 80));
+     pen.setWidth(3);
+     pen.setCosmetic(true);
+
+     QGraphicsPathItem* item = scene2->addPath(path, pen);
+     item->setZValue(5);
+
+}
+
 void MainWindow::drawRoad(QGraphicsScene *s, const QColor &color)
 {
     QPen roadPen(color);
@@ -248,4 +277,3 @@ void MainWindow::drawNightBackground()
     */
 
 }
-

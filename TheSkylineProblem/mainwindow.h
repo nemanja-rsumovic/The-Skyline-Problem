@@ -51,6 +51,7 @@ private:
 
     void showBuildings();
     void showSkyline();
+    void drawSkyline();
     void drawRoad(QGraphicsScene* s, const QColor& color);
     void drawNightBackground();
 

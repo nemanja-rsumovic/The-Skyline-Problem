@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pb_calculateSkyline, &QPushButton::clicked, this, &MainWindow::on_calculateSkyline);
     connect(ui->pb_showBuildings, &QPushButton::clicked, this, &MainWindow::on_showBuildings);
     connect(ui->pb_showSkyline, &QPushButton::clicked, this, &MainWindow::on_showSkyline);
-
+    connect(ui->pb_reset, &QPushButton::clicked, this, &MainWindow::on_reset);
 }
 
 MainWindow::~MainWindow()
@@ -109,6 +109,18 @@ void MainWindow::on_showSkyline()
 {
     ui->pb_showSkyline->setDisabled(true);
     drawSkyline();
+}
+
+void MainWindow::on_reset()
+{
+    ui->pb_showBuildings->setDisabled(true);
+    ui->pb_calculateSkyline->setDisabled(true);
+    ui->pb_showSkyline->setDisabled(true);
+    ui->te_buildings->clear();
+    ui->te_skyline->clear();
+    scene->clear();
+    scene2->clear();
+    scene2->setBackgroundBrush(QBrush());
 }
 
 void MainWindow::calculateBuildings()

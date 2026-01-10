@@ -36,6 +36,7 @@ private slots:
     void on_showBuildings();
     void on_calculateSkyline();
     void on_showSkyline();
+    void on_reset();
 
 private:
     Ui::MainWindow *ui;

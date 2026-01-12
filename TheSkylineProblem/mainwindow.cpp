@@ -7,18 +7,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    //Scene1-Buildings
     scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
-    //invert Y-axis + scaling
     ui->graphicsView->scale(1,-1);
 
-    //Scene2-Skyline
+
     scene2 = new QGraphicsScene(this);
     ui->graphicsView_2->setScene(scene2);
     ui->graphicsView_2->setRenderHint(QPainter::Antialiasing);
-    //invert Y-axis + scaling
     ui->graphicsView_2->scale(1,-1);
 
     connect(ui->pb_loadData, &QPushButton::clicked, this, &MainWindow::on_loadData);
@@ -35,14 +32,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_loadData()
 {
-    //erase previous data
     ui->te_buildings->clear();
     ui->te_skyline->clear();
     scene->clear();
     scene2->clear();
     scene2->setBackgroundBrush(QBrush());
 
-    //FileDialog
     QString fileName = QFileDialog::getOpenFileName(this, "Load buildings data", "../TheSkylineProblem/examples", "Text files (*.txt)");
 
     if (fileName.isEmpty())
@@ -176,10 +171,8 @@ void MainWindow::showBuildings()
 
     }
 
-    //scene->setSceneRect(scene->itemsBoundingRect());
     QRectF bounds = scene->itemsBoundingRect();
 
-    //Margin
     const qreal marginX = bounds.width() * 0.1;
     const qreal marginY = bounds.height() * 0.1;
     bounds.adjust(-marginX, -marginY, marginX, marginY);
@@ -221,16 +214,13 @@ void MainWindow::showSkyline()
 
     }
 
-    //scene->setSceneRect(scene->itemsBoundingRect());
     QRectF bounds = scene2->itemsBoundingRect();
 
-    //Margin
     const qreal marginX = bounds.width() * 0.1;
     const qreal marginY = bounds.height() * 0.1;
     bounds.adjust(-marginX, -marginY, marginX, marginY);
     scene2->setSceneRect(bounds);
 
-    //drawLine(skyline_buildings);
     drawRoad(scene2, color);
     drawNightBackground();
 
@@ -292,18 +282,4 @@ void MainWindow::drawNightBackground()
     gradient.setColorAt(1.0, QColor(60,60,60));
 
     scene2->setBackgroundBrush(QBrush(gradient));
-
-    //Stars
-    // #FIXME #TODO
-    /*
-    for(int i = 0; i < 100; i++)
-    {
-        int x = QRandomGenerator::global()->bounded(r.width());
-        int y = QRandomGenerator::global()->bounded(int(r.top()), int(r.center().y()));
-
-        auto star = scene2->addEllipse(x, y, 2, 2, Qt::NoPen, QBrush(Qt::white));
-        star->setZValue(-1);
-    }
-    */
-
 }

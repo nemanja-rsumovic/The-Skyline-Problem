@@ -5,7 +5,6 @@
 
 #include <QString>
 #include <QRandomGenerator>
-#include <iostream>
 
 #include <QMainWindow>
 
@@ -42,8 +41,8 @@ private:
     Ui::MainWindow *ui;
 
     Skyline skyline;
-    std::vector<std::vector<int>> buildings;
-    std::vector<std::vector<int>> skyline_buildings;
+    QVector<QVector<int>> buildings;
+    QVector<QVector<int>> skyline_buildings;
     QGraphicsScene* scene;
     QGraphicsScene* scene2;
 
@@ -55,6 +54,5 @@ private:
     void drawSkyline();
     void drawRoad(QGraphicsScene* s, const QColor& color);
     void drawNightBackground();
-
 };
 #endif // MAINWINDOW_H

@@ -1,17 +1,17 @@
 #ifndef SKYLINE_H
 #define SKYLINE_H
 
-#include <vector>
+#include <QVector>
 
 class Skyline
 {
 public:
     Skyline() = default;
-    std::vector<std::vector<int>> getSkyline(std::vector<std::vector<int>>& buildings);
+    QVector<QVector<int>> getSkyline(QVector<QVector<int>>& buildings);
 
 private:
-    std::vector<std::vector<int>> divide(std::vector<std::vector<int>>& buildings, int left, int right);
-    std::vector<std::vector<int>> merge(const std::vector<std::vector<int>>& a, const std::vector<std::vector<int>>& b);
+    QVector<QVector<int>> divide(QVector<QVector<int>>& buildings, int left, int right);
+    QVector<QVector<int>> merge(const QVector<QVector<int>>& a, const QVector<QVector<int>>& b);
 };
 
 #endif // SKYLINE_H

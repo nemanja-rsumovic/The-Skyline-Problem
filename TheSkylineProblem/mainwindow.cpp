@@ -62,7 +62,7 @@ void MainWindow::on_loadData()
         if (in.status() != QTextStream::Ok)
             break;
 
-        buildings.push_back({l,r,h});
+        buildings.append({l,r,h});
 
     }
 

@@ -1,14 +1,14 @@
 #include "skyline.h"
 
-std::vector<std::vector<int>> Skyline::getSkyline(std::vector<std::vector<int>>& buildings)
+QVector<QVector<int>> Skyline::getSkyline(QVector<QVector<int>>& buildings)
 {
-    if (buildings.empty())
+    if (buildings.isEmpty())
         return {};
 
     return divide(buildings, 0, static_cast<int>(buildings.size()) - 1);
 }
 
-std::vector<std::vector<int>> Skyline::divide(std::vector<std::vector<int>>& buildings, int left, int right)    
+QVector<QVector<int>> Skyline::divide(QVector<QVector<int>>& buildings, int left, int right)
 {
     if (left == right)
     {
@@ -31,18 +31,18 @@ std::vector<std::vector<int>> Skyline::divide(std::vector<std::vector<int>>& bui
     return merge(skylineLeft, skylineRight);
 }
 
-std::vector<std::vector<int>> Skyline::merge(const std::vector<std::vector<int>>& a, const std::vector<std::vector<int>>& b)
+QVector<QVector<int>> Skyline::merge(const QVector<QVector<int>>& a, const QVector<QVector<int>>& b)
 {
     int x = 0;
     int height = 0;
-    std::vector<std::vector<int>> result;
-    
+    QVector<QVector<int>> result;
+
     size_t i = 0;
     size_t j = 0;
 
     size_t aSize = a.size();
     size_t bSize = b.size();
-    
+
     int aHeight = 0;
     int bHeight = 0;
     int lastHeight = 0;
@@ -80,19 +80,19 @@ std::vector<std::vector<int>> Skyline::merge(const std::vector<std::vector<int>>
 
         if (height != lastHeight)
         {
-            result.push_back({x, height});
+            result.append({x, height});
             lastHeight = height;
         }
     }
 
     while (i < aSize)
     {
-        result.push_back(a[i]);
+        result.append(a[i]);
         i++;
     }
     while (j < bSize)
     {
-        result.push_back(b[j]);
+        result.append(b[j]);
         j++;
     }
 

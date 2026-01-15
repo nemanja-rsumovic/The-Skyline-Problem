@@ -11,7 +11,7 @@ public:
 
 private:
     QVector<QVector<int>> divide(QVector<QVector<int>>& buildings, int left, int right);
-    QVector<QVector<int>> merge(const QVector<QVector<int>>& a, const QVector<QVector<int>>& b);
+    static QVector<QVector<int>> merge(const QVector<QVector<int>>& a, const QVector<QVector<int>>& b);
 };
 
 #endif // SKYLINE_H

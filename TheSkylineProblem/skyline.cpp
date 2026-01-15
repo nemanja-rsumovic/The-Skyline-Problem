@@ -33,8 +33,7 @@ QVector<QVector<int>> Skyline::divide(QVector<QVector<int>>& buildings, int left
 
 QVector<QVector<int>> Skyline::merge(const QVector<QVector<int>>& a, const QVector<QVector<int>>& b)
 {
-    int x = 0;
-    int height = 0;
+    int x;
     QVector<QVector<int>> result;
 
     size_t i = 0;
@@ -76,7 +75,7 @@ QVector<QVector<int>> Skyline::merge(const QVector<QVector<int>>& a, const QVect
             j++;
         }
 
-        height = std::max(aHeight, bHeight);
+        int height = std::max(aHeight, bHeight);
 
         if (height != lastHeight)
         {

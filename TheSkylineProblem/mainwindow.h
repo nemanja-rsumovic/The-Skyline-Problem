@@ -7,6 +7,7 @@
 #include <QRandomGenerator>
 
 #include <QMainWindow>
+#include <QObject>
 
 #include <QFileDialog>
 #include <QFile>

@@ -17,6 +17,8 @@
 #include <QGraphicsLineItem>
 #include <QBrush>
 #include <QPen>
+#include <QPalette>
+#include <QColor>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -52,7 +54,7 @@ private:
     void showBuildings();
     void showSkyline();
     void drawSkyline();
-    void drawRoad(QGraphicsScene* s, const QColor& color);
+    void drawRoad(QGraphicsScene* s);
     void drawNightBackground();
 };
 #endif // MAINWINDOW_H

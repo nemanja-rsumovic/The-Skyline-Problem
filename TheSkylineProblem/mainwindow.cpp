@@ -178,7 +178,7 @@ void MainWindow::showBuildings()
     bounds.adjust(-marginX, -marginY, marginX, marginY);
     scene->setSceneRect(bounds);
 
-    drawRoad(scene, Qt::black);
+    drawRoad(scene);
 
     ui->graphicsView->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
 }
@@ -190,7 +190,7 @@ void MainWindow::showSkyline()
     int maxHeight = 0;
     int maxX = 0;
 
-    QColor color = QColor::fromRgb(190, 190, 190);
+    QColor color = QColor(190, 190, 190);
 
     for(const auto& b : buildings)
     {
@@ -221,7 +221,7 @@ void MainWindow::showSkyline()
     bounds.adjust(-marginX, -marginY, marginX, marginY);
     scene2->setSceneRect(bounds);
 
-    drawRoad(scene2, color);
+    drawRoad(scene2);
     drawNightBackground();
 
     ui->graphicsView_2->fitInView(scene2->sceneRect(), Qt::KeepAspectRatio);
@@ -252,12 +252,14 @@ void MainWindow::drawSkyline()
      pen.setCosmetic(true);
 
      QGraphicsPathItem* item = scene2->addPath(path, pen);
-     item->setZValue(5);
+     item->setZValue(2);
 
 }
 
-void MainWindow::drawRoad(QGraphicsScene *s, const QColor &color)
+void MainWindow::drawRoad(QGraphicsScene *s)
 {
+
+    QColor color = QColor(190, 190, 190);
     QPen roadPen(color);
     roadPen.setWidth(0.5);
 
@@ -266,7 +268,7 @@ void MainWindow::drawRoad(QGraphicsScene *s, const QColor &color)
         s->sceneRect().right(), 0,
         roadPen
     );
-    road->setZValue(-1);
+    road->setZValue(1);
 }
 
 void MainWindow::drawNightBackground()

@@ -16,10 +16,16 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsLineItem>
+#include <QGraphicsEllipseItem>
+#include <QGraphicsPathItem>
 #include <QBrush>
 #include <QPen>
 #include <QPalette>
 #include <QColor>
+#include <QLinearGradient>
+#include <QRadialGradient>
+#include <QPainterPath>
+#include <QStatusBar>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -49,6 +55,8 @@ private:
     QGraphicsScene* scene;
     QGraphicsScene* scene2;
 
+    void applyStylesheet();
+
     void calculateBuildings();
     void calculateSkyline();
 
@@ -57,5 +65,8 @@ private:
     void drawSkyline();
     void drawRoad(QGraphicsScene* s);
     void drawNightBackground();
+    void drawBuildingsBackground();
+    void drawStars();
+    void drawMoon();
 };
 #endif // MAINWINDOW_H

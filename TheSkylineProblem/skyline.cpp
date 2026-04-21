@@ -1,4 +1,5 @@
 #include "skyline.h"
+#include <algorithm>
 
 QVector<QVector<int>> Skyline::getSkyline(QVector<QVector<int>>& buildings)
 {
@@ -8,92 +9,48 @@ QVector<QVector<int>> Skyline::getSkyline(QVector<QVector<int>>& buildings)
     return divide(buildings, 0, static_cast<int>(buildings.size()) - 1);
 }
 
-QVector<QVector<int>> Skyline::divide(QVector<QVector<int>>& buildings, int left, int right)
+QVector<QVector<int>> Skyline::divide(QVector<QVector<int>>& buildings, int lo, int hi)
 {
-    if (left == right)
+    if (lo == hi)
     {
-        int xStart = buildings[left][0];
-        int xEnd   = buildings[left][1];
-        int height = buildings[left][2];
-
-        return
-        {
-            {xStart, height},
-            {xEnd, 0}
-        };
+        int xLeft  = buildings[lo][0];
+        int xRight = buildings[lo][1];
+        int h      = buildings[lo][2];
+        return { {xLeft, h}, {xRight, 0} };
     }
 
-    int center = left + (right - left) / 2;
+    int split = (lo + hi) / 2;
 
-    auto skylineLeft  = divide(buildings, left, center);
-    auto skylineRight = divide(buildings, center + 1, right);
+    QVector<QVector<int>> leftHalf  = divide(buildings, lo, split);
+    QVector<QVector<int>> rightHalf = divide(buildings, split + 1, hi);
 
-    return merge(skylineLeft, skylineRight);
+    return merge(leftHalf, rightHalf);
 }
 
-QVector<QVector<int>> Skyline::merge(const QVector<QVector<int>>& a, const QVector<QVector<int>>& b)
+QVector<QVector<int>> Skyline::merge(const QVector<QVector<int>>& left, const QVector<QVector<int>>& right)
 {
-    int x;
-    QVector<QVector<int>> result;
+    QVector<int> xs;
+    for (const auto& pt : left)  xs.push_back(pt[0]);
+    for (const auto& pt : right) xs.push_back(pt[0]);
+    std::sort(xs.begin(), xs.end());
 
-    size_t i = 0;
-    size_t j = 0;
+    QVector<QVector<int>> outline;
+    int li = 0, ri = 0;
+    int hL = 0, hR = 0;
+    int prevH = -1;
 
-    size_t aSize = a.size();
-    size_t bSize = b.size();
-
-    int aHeight = 0;
-    int bHeight = 0;
-    int lastHeight = 0;
-
-    while (i < aSize && j < bSize)
+    for (int x : xs)
     {
-        int xa = a[i][0];
-        int xb = b[j][0];
+        if (li < left.size()  && left[li][0]  == x) hL = left[li++][1];
+        if (ri < right.size() && right[ri][0] == x) hR = right[ri++][1];
 
-        if (xa < xb)
+        int peak = std::max(hL, hR);
+        if (peak != prevH)
         {
-            x = xa;
-            aHeight = a[i][1];
-
-            i++;
-        }
-        else if (xa > xb)
-        {
-            x = xb;
-            bHeight = b[j][1];
-
-            j++;
-        }
-        else
-        {
-            x = xa;
-            aHeight = a[i][1];
-            bHeight = b[j][1];
-
-            i++;
-            j++;
-        }
-
-        int height = std::max(aHeight, bHeight);
-
-        if (height != lastHeight)
-        {
-            result.append({x, height});
-            lastHeight = height;
+            outline.push_back({x, peak});
+            prevH = peak;
         }
     }
 
-    while (i < aSize)
-    {
-        result.append(a[i]);
-        i++;
-    }
-    while (j < bSize)
-    {
-        result.append(b[j]);
-        j++;
-    }
-
-    return result;
+    return outline;
 }

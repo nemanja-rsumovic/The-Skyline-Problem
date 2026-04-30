@@ -17,7 +17,7 @@ The goal is to compute the city silhouette as viewed from a distance, using an e
 
 ## ▶️ Demo
 
-https://github.com/user-attachments/assets/8858b8bf-028a-4006-90cf-bd7d32208c13
+https://github.com/user-attachments/assets/513076b7-a4f6-4d17-bd8a-7dbf9fe12e89
 
 ---
 
